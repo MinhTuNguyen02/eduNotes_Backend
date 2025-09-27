@@ -13,6 +13,7 @@ app.use(express.json());
 app.use(morgan("dev"));
 
 app.use(APIs_V1);
+app.get("/health", (_, res) => res.json({ ok: true }));
 
 mongoose.connect(process.env.MONGO_URI, {
     dbName: process.env.DATABASE_NAME, 
@@ -20,4 +21,5 @@ mongoose.connect(process.env.MONGO_URI, {
     .then(()=>console.log("MongoDB connected"))
     .catch(err=>console.log("Mongo error", err.message));
 
-app.listen(process.env.PORT, ()=>console.log(`API on ${process.env.PORT}`));
+const port = process.env.PORT || 5000;
+app.listen(port, ()=>console.log(`API on ${port}`));
